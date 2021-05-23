@@ -245,17 +245,17 @@ export default {
             {
               id: "extraterrestre",
               value: false,
-              size: "50",
+              size: "120",
             },
             {
               id: "indie",
               value: false,
-              size: "100",
+              size: "200",
             },
             {
               id: "pop-rock",
               value: false,
-              size: "200",
+              size: "300",
             },
           ],
         }
@@ -346,6 +346,9 @@ audio {
   font-weight: 300;
   letter-spacing: 1px;
   margin-bottom: 1rem;
+}
+.intro {
+  max-width: 720px;
 }
 input[type="radio"] {
   margin-right: 1rem;
