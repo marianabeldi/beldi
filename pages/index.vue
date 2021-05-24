@@ -272,7 +272,7 @@ export default {
       fetch(scriptURL, { method: 'POST', body: new FormData(form)})
         .then(response => this.sendingFeedback = false)
         .catch(error => console.error('Error!', error.message))
-        this.$refs.btnSubmit.onclick = function () { location.href = "https://beldi.netlify.app/gallery"; }
+        this.$refs.btnSubmit.onclick = function () { location.href = "https://www.beldi.netlify.app/gallery/"; }
     },
     setStep(type){
       if (type === "next" && this.currentStep < 6) {
