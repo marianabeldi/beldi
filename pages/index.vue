@@ -272,7 +272,7 @@ export default {
       fetch(scriptURL, { method: 'POST', body: new FormData(form)})
         .then(response => this.sendingFeedback = false)
         .catch(error => console.error('Error!', error.message))
-        this.$refs.btnSubmit.onclick = function () { window.location.href = "/gallery/index.html"; }
+        this.$refs.btnSubmit.onclick = function () { window.location.href = "/gallery"; }
     },
     setStep(type){
       if (type === "next" && this.currentStep < 6) {
