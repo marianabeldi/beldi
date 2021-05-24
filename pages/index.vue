@@ -40,7 +40,7 @@
         <section class="your-planet">
           <h2>Tu planeta!</h2>
           <p>Querés enviarlo y publicarlo?</p>
-            <svg class="planeta-final" viewBox="0 0 160 160" :width="planet.size" :height="planet.size" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <svg ref="planetRef" class="planeta-final" viewBox="0 0 160 160" :width="planet.size" :height="planet.size" xmlns:xlink="http://www.w3.org/1999/xlink">
               <defs>
                 <g id="planeta"><path d="M46.35 48.67c-13.15 15-16.74 40.92-.76 59.29 19.69 22.63 58.93 22.1 75.54-.35 14.8-20 14-47-4.29-62.84-19.32-16.71-53.32-15.71-70.49 3.9z"/><path d="M44.78 44.85C30.7 61.43 27.74 86 39.06 104.93c10.72 17.91 32.82 26.67 53.1 23.64 21.26-3.17 36.39-18.87 41-39.66 4.75-21.5-4.47-43.94-24.21-54.28-20.55-10.76-48.41-7.21-64.17 10.22-2.42 2.67 0 11.12 3.15 7.64C72 25.84 128.05 36.3 128.53 76.76c.22 18.34-11.53 35.3-28.91 41.05-15.6 5.17-34.21 2.12-47-8.3-17.55-14.28-19.19-39.93-4.68-57a5.93 5.93 0 00.9-6.14c-.66-1.37-2.61-3.24-4.06-1.52z"/></g>
               </defs>
@@ -69,6 +69,7 @@
             </svg>
             <div class="textarea-content" :class="{active: sendingFeedback}">
               <form ref="submitFeedback" name="submit-to-google-sheet">
+                <input ref="planetInput" type="hidden" name="svg">
                 <input class="nombre" name="nombre" placeholder="Tu nombre (optional)">
                 <button type=submit @click.prevent="feedbackSubmit()">Enviar »</button>
               </form>  
@@ -232,7 +233,7 @@ export default {
               satelite: '<path d="M155.68 94.28c.17-2.4.25-5-1.29-7-1.94-2.53-6-2.81-7.79 0a10.11 10.11 0 00-1 3.67 56.87 56.87 0 01-2.27 9.61c-1.92 5.29-5 10-7.41 15.11-.12.26-.27 2.17.33 1.86a31.34 31.34 0 008.75-6.63l-.4-1.72-2.76 10.11c0 .18-.1 2.14.41 1.74a37.08 37.08 0 0013.65-26.59c0-.89-.66-2.08-.78-.57A36.11 36.11 0 01142 119l.41 1.75 2.75-10.13c.05-.18 0-2.15-.41-1.72a31.25 31.25 0 01-8.74 6.66l.33 1.85c2.67-5.68 6.12-11 8-17 .9-2.81 1.06-5.71 1.84-8.52 2.2-7.91 9-5.11 9.12 2.25.05.41.35.7.38.14z" fill="#db6c5a"/><path d="M149.11 94.57a3.23 3.23 0 01-1.52-4.65 3.63 3.63 0 015.7-.54 3.41 3.41 0 01-1.18 5.21 4 4 0 01-3-.02z" fill="#eee8d3"/><path d="M151.72 98.67c-1 4.33-2.2 8.22-4.79 11.9l.42 1.06c.28-2 .42-4.07.7-6.1 0-.13-.07-1.59-.38-1.25a18.55 18.55 0 01-5.34 4l.3 1.67a37.65 37.65 0 005.23-13.57c.11-.53-.35-2.11-.62-.93a39.05 39.05 0 01-5 12.93c-.16.25-.21 1.95.31 1.67a18.89 18.89 0 005.31-4.17l-.41-1.05c-.26 2.05-.39 4.11-.65 6.16 0 .18.13 1.34.44.88a28.9 28.9 0 004.62-13.08c0-.12-.09-.42-.15-.17z" fill="#ebd186"/>',
             },
             {
-              id: "ns/nc",
+              id: "ns / nc",
               value: false,
               satelite: "",
             },
@@ -265,8 +266,9 @@ export default {
   methods: {
     feedbackSubmit() {
       this.sendingFeedback = true;
-      const scriptURL = 'https://script.google.com/macros/s/AKfycbyL0odZ31217DZazHK0GxjqUUg3HCOg7PMq92pYVLryyMBwnApqY9H45HF0_zcsoClA/exec'
+      const scriptURL = 'https://script.google.com/macros/s/AKfycbwz6CT-24RkNWGcggDWfh29uyE1B8qqr8AjJhYOesQDwHt5R38D_ThFzMAC5KDT7odV/exec'
       const form = this.$refs.submitFeedback
+      this.$refs.planetInput.value = this.$refs.planetRef.outerHTML
       fetch(scriptURL, { method: 'POST', body: new FormData(form)})
         .then(response => this.sendingFeedback = false)
         .catch(error => console.error('Error!', error.message))
@@ -274,11 +276,9 @@ export default {
     setStep(type){
       if (type === "next" && this.currentStep < 6) {
         this.currentStep++
-        console.log(this.currentStep)
       }
       if (type === "prev" ) {
         this.currentStep = this.currentStep-1
-        console.log(this.currentStep)
       }
     },
     setOption(optionid,type) {
