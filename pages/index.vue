@@ -71,7 +71,7 @@
               <form ref="submitFeedback" name="submit-to-google-sheet">
                 <input ref="planetInput" type="hidden" name="svg">
                 <input class="nombre" name="nombre" placeholder="Tu nombre (optional)">
-                <button type=submit @click.prevent="feedbackSubmit()">Enviar »</button>
+                <button ref="btnSubmit" type="submit" @click.prevent="feedbackSubmit()">Enviar »</button>
               </form>  
             </div>
         </section>
@@ -272,6 +272,7 @@ export default {
       fetch(scriptURL, { method: 'POST', body: new FormData(form)})
         .then(response => this.sendingFeedback = false)
         .catch(error => console.error('Error!', error.message))
+        this.$refs.btnSubmit.onclick = function () { location.href = "https://beldi.netlify.app/gallery"; }
     },
     setStep(type){
       if (type === "next" && this.currentStep < 6) {
@@ -392,6 +393,16 @@ input[type="radio"] {
 }
 .textarea-content {
   margin-bottom: 3rem;
+  position: relative;
+}
+.textarea-content.active:after {
+  background-color: rgba(0,0,0,.6);
+  position: absolute;
+  top: 0;
+  left: 0;
+  content: "loading..";
+  height: 100%;
+  width: 100%;
 }
 .nombre {
   border: 1px solid #001b28;

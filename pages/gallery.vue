@@ -4,8 +4,11 @@
       <Logo />
       <h1 class="title"> beldi</h1>
       <h2>Todos los planetas</h2>
-      <section class="all-planets">
-          <div></div>
+      <section class="all-planets" v-if="!gettingData">
+          <div v-for="(item, i) in gotData" :key="i">
+            <svg v-html="item.svg" width="300" height="300"></svg>
+            <p>by {{item.name}}</p>
+          </div>
       </section>
 
     </div>
@@ -13,6 +16,33 @@
 </template>
 
 <script>
+export default {
+  data() {
+    return {
+      gettingData: true,
+      gotData: []
+    };
+  },  
+  created() {
+    this.getData()
+  },
+  methods: {
+    getData() {
+      fetch("https://sheets.googleapis.com/v4/spreadsheets/1uO61cTI5r7mx0NrX5LJaXuzKAfbVIL-nPKUOEL0vTEY?key=AIzaSyDLhiXvMbj7DUfamL_WTFT7nBMBmcZdGts&includeGridData=true", {mode: 'cors'})
+        .then(response => response.json())
+        .then((data) => { 
+          for (let e = 1; e < data.sheets[0].data[0].rowData.length; e++) {
+            var newObj = {}
+            newObj.name = data.sheets[0].data[0].rowData[e].values[0].formattedValue
+            newObj.svg = data.sheets[0].data[0].rowData[e].values[1].formattedValue
+            this.gotData.push(newObj)
+          }
+          this.gettingData = false
+        });
+      console.log(this.gotData)
+    }
+  },  
+};
 </script>
 
 <style>
@@ -46,7 +76,13 @@ body {
   letter-spacing: 1px;
 }
 .all-planets {
-    display: grid;
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+}
+.all-planets p {
+  background-color: #001b28;
+  font-size: 1rem;
 }
 
 </style>
