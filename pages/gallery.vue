@@ -24,7 +24,7 @@ export default {
     };
   },  
   created() {
-    setTimeout(() => this.getData(), 2000);
+    setTimeout(() => this.getData(), 600);
   },
   methods: {
     getData() {
