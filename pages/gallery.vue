@@ -5,8 +5,8 @@
       <h1 class="title"> beldi</h1>
       <h2>Todos los planetas</h2>
       <section class="all-planets" v-if="!gettingData">
-          <div v-for="(item, i) in gotData" :key="i">
-            <svg v-html="item.svg" width="300" height="300"></svg>
+          <div class="planet" v-for="(item, i) in gotData" :key="i">
+            <div v-html="item.svg" width="300" height="300"></div>
             <p>by {{item.name}}</p>
           </div>
       </section>
@@ -24,7 +24,7 @@ export default {
     };
   },  
   created() {
-    setTimeout(() => this.getData(), 600);
+    setTimeout(() => this.getData(), 2000);
   },
   methods: {
     getData() {
@@ -78,11 +78,17 @@ body {
 .all-planets {
   display: flex;
   flex-wrap: wrap;
-  gap: .5rem;
+  gap: .5rem 1rem;
 }
 .all-planets p {
   background-color: #001b28;
   font-size: 1rem;
+}
+.all-planets .planet {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: .5rem;
 }
 
 </style>
