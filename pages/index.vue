@@ -3,26 +3,28 @@
     <div>
       <Logo />
       <h1 class="title">
-        planetas
+        Espejismos
       </h1>
       <template v-if="currentStep === 0">
         <section class="intro">
-          <h2>Hola!</h2>
-          <p>Nosotros somos <a href="https://www.instagram.com/beldimusic/" target="blank">beldi</a>. Te presentamos nuestro primer tema del 2021: Espejismos.</p>
+          <p><strong>¡Hola!</strong> Nosotros somos <a href="https://www.instagram.com/beldimusic/" target="blank">BELDI</a>, te presentamos nuestro próximo single <b>Espejismos</b> y te invitamos a ser parte de la nueva tapa:</p>
+          <small> 🎧 Te recomendamos escucharlo con auriculares 🎧</small>
           <audio controls>
             <source src="/espejismos.mp3" type="audio/mpeg">
-            Your browser does not support the audio element.
+            Tu browser no soporta elementos de audio.
           </audio>
-          <p>Cuando termines de escucharlo te invitamos a responder 5 preguntas sencillas, no te llevará más de 5 minutos.</p>
+          <p>Después de escucharlo clickeá <b>'empezar'</b> para contestar 5 preguntas sencillas.<br>
+            Al final de la encuesta verás el planeta diseñado con tus respuestas y podrás elegir enviarlo a la <nuxt-link to="/gallery">galería</nuxt-link> junto a tu nombre y tu mail.</p>
+          <p>Seleccionaremos por sorteo los planetas que formarán parte del arte de tapa. Sus creadores recibirán de regalo remeras, gorras y bouchers de cerveza en Cervelar Palermo.</p>
           <div class="buttons">
             <button @click.prevent="setStep('next')">Empezar ›</button>
           </div>
         </section>
       </template>
-      <section class="form">
+      <section class="form" :class="{active: currentStep > 0 && currentStep < 6}">
         <form class="questions-form">
-          <div class="question-wrapper" :class="{active: currentStep === i+1}" :data-caca="i" v-bind:key="pregunta.id" v-for="(pregunta,i) in preguntas">
-            <p>{{pregunta.label}}</p>
+          <div class="question-wrapper" :class="{active: currentStep === i+1, cols: currentStep === 1 || 2}" :data-caca="i" v-bind:key="pregunta.id" v-for="(pregunta,i) in preguntas">
+            <p class="pregunta">{{pregunta.label}}</p>
             <div v-bind:key="option.id" v-for="option in pregunta.content">
               <label class="checkmark-container" :for="option.id">
               <input :id="option.id" type="radio" :name="pregunta.name" :value="option.id" @change="setOption(option.id,pregunta.name)" />
@@ -39,30 +41,29 @@
       <template v-if="currentStep === 6">
         <section class="your-planet">
           <h2>Tu planeta!</h2>
-          <p>Querés enviarlo y publicarlo?</p>
-            <svg ref="planetRef" class="planeta-final" viewBox="0 0 160 160" :width="planet.size" :height="planet.size" xmlns:xlink="http://www.w3.org/1999/xlink" overflow="visible" :color="planet.color">
+          <p>¿Querés enviarlo y publicarlo en la galería?</p>
+            <svg ref="planetRef" class="planeta-final" viewBox="0 0 160 160" :width="planet.size" :height="planet.size" xmlns:xlink="http://www.w3.org/1999/xlink" overflow="visible">
               <defs>
                 <g id="planeta" transform="translate(-80, -80)"><path d="M46.35 48.67c-13.15 15-16.74 40.92-.76 59.29 19.69 22.63 58.93 22.1 75.54-.35 14.8-20 14-47-4.29-62.84-19.32-16.71-53.32-15.71-70.49 3.9z"/><path d="M44.78 44.85C30.7 61.43 27.74 86 39.06 104.93c10.72 17.91 32.82 26.67 53.1 23.64 21.26-3.17 36.39-18.87 41-39.66 4.75-21.5-4.47-43.94-24.21-54.28-20.55-10.76-48.41-7.21-64.17 10.22-2.42 2.67 0 11.12 3.15 7.64C72 25.84 128.05 36.3 128.53 76.76c.22 18.34-11.53 35.3-28.91 41.05-15.6 5.17-34.21 2.12-47-8.3-17.55-14.28-19.19-39.93-4.68-57a5.93 5.93 0 00.9-6.14c-.66-1.37-2.61-3.24-4.06-1.52z"/></g>
               </defs>
               <pattern id="pat1" width="120" height="60" patternUnits="userSpaceOnUse" patternTransform="rotate(10) skewX(30) scale(1 0.8)">
-                <path d="M1.4 13.6c45.8-1 72.3.2 117.9 3.4V6c0-.9.6-1.9 0-2.5-.6-.6.8-.7 0-.7C73.3-.5 47 1.1 1.4 0v13.6zM1.4 38c8.6-.3 17.1-.6 25.7-.2 8.3.3 16.6 1.2 24.9 1.8 16 1 32 .9 48 .5 6.4-.2 12.9-.4 19.3-.8 1.9-.1 1.9-3.1 0-3a654.3 654.3 0 01-64.3.5c-8.4-.4-16.7-1.4-25.1-1.8-9.5-.5-19-.3-28.5.1-1.9 0-1.9 3 0 2.9zM1.4 52.3c44.2.9 73.8 1.7 117.9-1.6.2 3.9-.2 7.8 0 11.6-44.2-1.5-73.9 3.9-117.9-2-.4-1.7 0-8 0-8z" fill="currentColor"/>
+                <path d="M1.4 13.6c45.8-1 72.3.2 117.9 3.4V6c0-.9.6-1.9 0-2.5-.6-.6.8-.7 0-.7C73.3-.5 47 1.1 1.4 0v13.6zM1.4 38c8.6-.3 17.1-.6 25.7-.2 8.3.3 16.6 1.2 24.9 1.8 16 1 32 .9 48 .5 6.4-.2 12.9-.4 19.3-.8 1.9-.1 1.9-3.1 0-3a654.3 654.3 0 01-64.3.5c-8.4-.4-16.7-1.4-25.1-1.8-9.5-.5-19-.3-28.5.1-1.9 0-1.9 3 0 2.9zM1.4 52.3c44.2.9 73.8 1.7 117.9-1.6.2 3.9-.2 7.8 0 11.6-44.2-1.5-73.9 3.9-117.9-2-.4-1.7 0-8 0-8z" :fill="planet.color"/>
               </pattern>
-          <pattern id="pat2" width="100" height="100" patternUnits="userSpaceOnUse" patternTransform="rotate(18) skewX(20) scale(1 0.5)">
-                <path d="M105.1 27.9c-3.8-6-13.6 13.1-15.4 9S82.3 27.6 78.1 26c-5.3-2-10.5 2.8-14 7.2s-5.5 9.3-10.9 7.6c-6.1-1.9-7.7-11.1-13.9-12.8-3.7-1-7.5 1.2-10.4 3.8s-6.6 8.6-10.2 9.8c-6.6 2.2-9.8-9.5-9.1-16.4 0 0-21.7 24.2-.1 46.5 2.4 2.4 6.3-13 9.6-13.4 5.7-.7 12.4 13 18 13 5.7 0 13.1-14.8 19-14.9 4.9-.1 13.3 13.7 18.8 13.1 4.9-.6 12.8-14.2 16.4-14.1 3.1.1 9.8 10.1 12.9 11.7 0 0 11.8-21.9.9-39.2z" fill="currentColor"/>
+              <pattern id="pat2" width="100" height="100" patternUnits="userSpaceOnUse" patternTransform="rotate(18) skewX(20) scale(1 0.5)">
+                <path d="M105.1 27.9c-3.8-6-13.6 13.1-15.4 9S82.3 27.6 78.1 26c-5.3-2-10.5 2.8-14 7.2s-5.5 9.3-10.9 7.6c-6.1-1.9-7.7-11.1-13.9-12.8-3.7-1-7.5 1.2-10.4 3.8s-6.6 8.6-10.2 9.8c-6.6 2.2-9.8-9.5-9.1-16.4 0 0-21.7 24.2-.1 46.5 2.4 2.4 6.3-13 9.6-13.4 5.7-.7 12.4 13 18 13 5.7 0 13.1-14.8 19-14.9 4.9-.1 13.3 13.7 18.8 13.1 4.9-.6 12.8-14.2 16.4-14.1 3.1.1 9.8 10.1 12.9 11.7 0 0 11.8-21.9.9-39.2z" :fill="planet.color"/>
                 <path d="M15.8 25.5c.9-2.7 3.8-3.7 6.3-2.4 2 1.1 2.3 4.2.8 5.8-2.8 3-8 .2-7.1-3.7.3-1.2-1.1-2-1.4-.6-.5 2.1.1 4.9 1.8 6.3 2.6 2.3 7 1.6 8.5-1.5 1.2-2.5.9-6.5-1.6-8.1-3.3-2.2-7.3-.6-8.6 3.1-.3.9.8 2.4 1.3 1.1zM88.9 64.4c2.7-.5 6.2 1.6 5.3 4.7a4.2 4.2 0 01-5.8 2.6c-3.9-1.8-2.7-6.3.7-7.4.9-.3.6-2.5-.4-2.1-5.7 1.8-5.6 10.8.5 12.1 3.4.7 6.5-2.5 6.6-5.8.1-3.7-3.2-7.1-7-6.3-.9.1-.8 2.4.1 2.2zM19.8 92.4c5.2-1.9 11-6.2 16.6-6.3 2.4 0 4.9 1.5 7.1 2.3l9.3 3.3c7.5 2.4 13.3-1.7 19.9-4.5 7.8-3.4 15.8 1.6 22.2 6.1 1 .7 1.4-1.4.7-1.9-4.9-3.4-12.1-8.4-18.4-7.9-3.8.3-7.4 2.8-10.8 4.4a17.7 17.7 0 01-14.2 1.4c-3.4-1.1-6.7-2.4-10-3.6-2-.8-3.8-1.9-6-1.8-5.8.1-11.7 4.4-17 6.4-.7.3-.4 2.5.6 2.1zM13.6 6.3a24 24 0 0021.7 3.3c3.8-1 7.4-2.5 11.1-4.1 2.5-1 5.1-2.5 7.9-2.5 7.7 0 14.3 5.5 22 5.8 7.3.4 16.2-1.5 21.7-6.7.7-.6.1-2.7-.8-1.9-5.7 5.5-15.5 7.2-23.1 6.3C67.2 5.7 61.2 1 54.2.8c-4.8-.1-9.7 3.4-14 5-8.7 3.3-18 4.5-25.9-1.4-1-.7-1.5 1.4-.7 1.9z" fill="currentColor"/>
               </pattern>
-          <pattern id="pat3" width="55" height="70" patternUnits="userSpaceOnUse">
-                <path d="M.3 73.1C28.9 48.2 58.6 24.6 88.5 1.4c.3-.2.1-1.6-.2-1.4C57.9 22.6 28.6 47 .1 72c-.2.2 0 1.3.2 1.1z" fill="currentColor" stroke="currentColor" stroke-width="7"/>
+              <pattern id="pat3" width="55" height="70" patternUnits="userSpaceOnUse">
+                <path d="M.3 73.1C28.9 48.2 58.6 24.6 88.5 1.4c.3-.2.1-1.6-.2-1.4C57.9 22.6 28.6 47 .1 72c-.2.2 0 1.3.2 1.1z" :fill="planet.color" :stroke="planet.color" stroke-width="7"/>
               </pattern>
-            <pattern id="pat4" width="34" height="34" patternUnits="userSpaceOnUse" patternTransform="rotate(30) skewX(0) scale(2 1.5)">
-                <path fill="currentColor" d="M7.5 16.1c.3 0 .5 0 .8-.1.3 0 .3-.5.3-.7 0-.2-.1-.7-.3-.7-.3 0-.5 0-.8-.1-.1 0-.2.1-.2.2-.1.2-.1.4-.1.5 0 .2 0 .4.1.5 0 .2.1.4.2.4zM23.6 26.9c-.2.2-.3.4-.5.6-.3.3-.1 1.8.4 1.3.2-.2.3-.4.5-.5.3-.4.1-1.8-.4-1.4-.1.2-.3.4-.5.6-.3.3 0 1.7.3 1.4l.5-.5c.5-.5.2-2.1-.3-1.5zM19.8 19.8c.2 0 .2-.8 0-.8-.3 0-.3.8 0 .8zM9.1 27.8c.1 0 .1-.4 0-.4-.1-.1-.1.4 0 .4zM18.9 4.5c.4 0 .4-1.3 0-1.3s-.4 1.3 0 1.3zM10 29.7c.3 0 .3-.9 0-.9-.4-.1-.3.9 0 .9zM5.9 9.9c1 0 .9-2.2-.1-2.2s-.9 2.2.1 2.2zM1 24.6c1 0 .9-2.2-.1-2.2s-.9 2.2.1 2.2zM23.8 12.5c.3 0 .3-.9 0-.9s-.3.9 0 .9zM10 1.2c.4 0 .3-1.2 0-1.2-.4 0-.4 1.2 0 1.2zM13.2 16.4c1 0 .9-2.2-.1-2.2-.9 0-.9 2.2.1 2.2zM11.6 10c.3 0 .2-.9 0-.9-.3 0-.3.9 0 .9zM.1 2.5c.2 0 .2-.6 0-.6s-.1.6 0 .6zM13.2 25.7c.4 0 .4-1.2 0-1.2s-.4 1.2 0 1.2zM7.5 23.8c.2 0 .2-.6 0-.6s-.2.6 0 .6zM.1 17.2c.1 0 .1-.5 0-.5s-.1.5 0 .5z"/>
+              <pattern id="pat4" width="34" height="34" patternUnits="userSpaceOnUse" patternTransform="rotate(30) skewX(0) scale(2 1.5)">
+                <path :fill="planet.color" d="M7.5 16.1c.3 0 .5 0 .8-.1.3 0 .3-.5.3-.7 0-.2-.1-.7-.3-.7-.3 0-.5 0-.8-.1-.1 0-.2.1-.2.2-.1.2-.1.4-.1.5 0 .2 0 .4.1.5 0 .2.1.4.2.4zM23.6 26.9c-.2.2-.3.4-.5.6-.3.3-.1 1.8.4 1.3.2-.2.3-.4.5-.5.3-.4.1-1.8-.4-1.4-.1.2-.3.4-.5.6-.3.3 0 1.7.3 1.4l.5-.5c.5-.5.2-2.1-.3-1.5zM19.8 19.8c.2 0 .2-.8 0-.8-.3 0-.3.8 0 .8zM9.1 27.8c.1 0 .1-.4 0-.4-.1-.1-.1.4 0 .4zM18.9 4.5c.4 0 .4-1.3 0-1.3s-.4 1.3 0 1.3zM10 29.7c.3 0 .3-.9 0-.9-.4-.1-.3.9 0 .9zM5.9 9.9c1 0 .9-2.2-.1-2.2s-.9 2.2.1 2.2zM1 24.6c1 0 .9-2.2-.1-2.2s-.9 2.2.1 2.2zM23.8 12.5c.3 0 .3-.9 0-.9s-.3.9 0 .9zM10 1.2c.4 0 .3-1.2 0-1.2-.4 0-.4 1.2 0 1.2zM13.2 16.4c1 0 .9-2.2-.1-2.2-.9 0-.9 2.2.1 2.2zM11.6 10c.3 0 .2-.9 0-.9-.3 0-.3.9 0 .9zM.1 2.5c.2 0 .2-.6 0-.6s-.1.6 0 .6zM13.2 25.7c.4 0 .4-1.2 0-1.2s-.4 1.2 0 1.2zM7.5 23.8c.2 0 .2-.6 0-.6s-.2.6 0 .6zM.1 17.2c.1 0 .1-.5 0-.5s-.1.5 0 .5z"/>
               </pattern>
-            <pattern id="pat5" width="26" height="26" patternUnits="userSpaceOnUse" patternTransform="rotate(20) scale(1)">
-                <path fill="currentColor" d="M1.5 6.1c2 0 1.9-4.5-.1-4.5-1.9 0-1.9 4.5.1 4.5zM9.4 14c2 0 1.9-4.5-.1-4.5S7.4 14 9.4 14zM23 14c2 0 1.9-4.5-.1-4.5S21 14 23 14zM12.2 24.7c2 0 1.9-4.5-.1-4.5-1.9 0-1.8 4.5.1 4.5zM3.2 22.5c2 0 1.9-4.5-.1-4.5-2 .1-1.9 4.5.1 4.5zM15.6 4.5c2 0 1.9-4.5-.1-4.5s-1.9 4.5.1 4.5z"/>
+              <pattern id="pat5" width="26" height="26" patternUnits="userSpaceOnUse" patternTransform="rotate(20) scale(1)">
+                <path :fill="planet.color" d="M1.5 6.1c2 0 1.9-4.5-.1-4.5-1.9 0-1.9 4.5.1 4.5zM9.4 14c2 0 1.9-4.5-.1-4.5S7.4 14 9.4 14zM23 14c2 0 1.9-4.5-.1-4.5S21 14 23 14zM12.2 24.7c2 0 1.9-4.5-.1-4.5-1.9 0-1.8 4.5.1 4.5zM3.2 22.5c2 0 1.9-4.5-.1-4.5-2 .1-1.9 4.5.1 4.5zM15.6 4.5c2 0 1.9-4.5-.1-4.5s-1.9 4.5.1 4.5z"/>
               </pattern>
-                <pattern id="pat6" width="54" height="50" patternUnits="userSpaceOnUse" patternTransform="rotate(14) scale(1.4) skewX(-8)">
-                <path d="M19.4 9.5c.8 1.8-.5 4.2-2.1 5.5-1.2.9-2.8 1.4-3.8 2.6-1.3 1.6-1 4-1.9 5.9-1.2 2.5-4.5 3.4-6.8 2.2s-3.6-4-3.7-6.7c0-1.5.3-3.1.2-4.6C1.1 12.2 0 10.3 0 8.1c0-3.3 3.1-6.4 6.3-6.3 3 .2 12 5.2 13.1 7.7zM36.8 45.6c-2.2-2-2.7-6.1-.7-8.3 1.1-1.3 3-1.6 4.3-2.8 1.2-1.2 1.7-3.1 3.2-3.9 1.7-1 4-.1 5 1.5 1.1 1.6 1.6 5.8 0 7.7-1.3 1.5-2.7.8-3.5 1.8-.6.8-.4 1.9-.7 2.9-.3 1.4-3.5 5-7.6 1.1zM36.7.5c2.8-.7 6.1-.9 7.8 1 1.7 1.9 1.2 5.1 3.3 6.6.8.5 1.8.8 2.4 1.5.7.8.8 2.7.2 3.7-.6 1-4.6 4.4-7.5 4.2-2.5-.2-3.9-2.4-4.8-4.4-.7-1.6-1.5-3.2-3.2-3.9-1.1-.4-2.3-.4-3.5-.6-2.3-.4-4.9-5.7 5.3-8.1zM24.7 44.2c-.2 2.4-1.8 3.2-3.4 3.5s-3.2-.1-4.7-.4-3.7-.6-6.2.4c-1.6.6-4-1.1-5-2.4-1-1.3-1.2-3.2-.4-4.5.9-1.5 2.8-1.9 4.2-3.1 1.5-1.3 3.3-3.9 5.9-2.3 1.9 1.1 2.9 3.2 4.4 4.9s5.4 1.2 5.2 3.9zM30 29.8c2.7-.9 4.9-4 4.3-6.8-.6-2.9-3.8-4.8-6.6-4.5-1.4.1-2.7.6-3.8 1.4a4.4 4.4 0 00-1.6 3.5c-.1 1.5.2 3.1 1 4.4a5 5 0 002.6 2.1c1.3.5 2.8.3 4.1-.1.8-.2 1.3-1.1 1-1.8-.2-.8-1-1.3-1.8-1l-.8.2-.4.1c.4-.1 0 0 0 0H27.1h.1-.2l-.5-.1s.3.2.1 0l-.2-.1-.2-.1c-.2-.1.3.3.1 0l-.4-.4.1.1-.1-.2-.2-.4-.1-.2c-.1-.3.1.4 0 .1l-.2-.5-.2-.8c-.1-.4 0 .4 0-.1v-.4-.7-.1c0-.4-.1.3 0-.1l.1-.3c.1-.2 0-.1 0 0l.1-.2.2-.3c-.2.3 0 0 0 0l.2-.2c.2-.3-.3.2 0 0l.6-.3c.1 0 .4-.2 0 0l.4-.1.7-.2c.1 0 .4-.2 0 0h1c.4 0-.3-.1.1 0l.5.1.4.1c-.3-.1.1 0 .1.1l.6.4.1.1.3.3.1.1.3.4.2.3.1.2.1.3V24v.2c0 .1-.1.4 0 .1l-.1.5-.1.3-.1.2-.5.7-.1.1-.4.4-.3.2-.2.1-.3.2c-.2.1-.1.1 0 0l-.2.1c-.7.2-1.3 1.1-1 1.8.3.6 1.1 1.2 1.9.9z" fill="currentColor"/>
-                <!-- <path d="M.3 7c-.3-2.8 2.4-5.2 5-5.2 2.4 0 4.4 1.6 5.1 3.8.1.4.4-1.2.3-1.5-1-3-4.4-5.1-7.5-3.6C.7 1.8-.3 4.7.1 7.3c.1.8.3.1.2-.3z" :fill="planet.color"/> -->
+              <pattern id="pat6" width="98" height="86" patternUnits="userSpaceOnUse" patternTransform="rotate(-30) scale(.8 .5) skewY(-10)">
+                <path d="M.5.8c13.2.2 26.5.8 39.7 1.3A445.7 445.7 0 0097.7.8c.5 0 .5-.8 0-.8C84.5 1 71.3 1.7 58 1.7c-10.9 0-21.8-.5-32.7-1L.5 0C0 0 0 .7.5.8zM97.7 10.4c-13.4-.4-26.8-.8-40.2-.8-11 0-22 .2-33 .4l-24.1.4c-.5 0-.5.8 0 .8l38.9-.7c11.1-.2 22.2-.2 33.3 0l25 .7c.6 0 .6-.8.1-.8zM97.7 86.9c-13.4-.4-26.8-.8-40.2-.8-11 0-22 .2-33 .4l-24.1.4c-.5 0-.5.8 0 .8l39-.7c11.1-.2 22.3-.2 33.4 0l25 .7c.4-.1.4-.8-.1-.8zM.5 77.2c13.2.3 26.5.8 39.7 1.3a445.7 445.7 0 0057.5-1.3c.5 0 .5-.8 0-.8-13.2 1-26.4 1.7-39.7 1.7-10.9 0-21.8-.5-32.7-1-8.3-.3-16.6-.6-24.9-.7-.4 0-.4.8.1.8z" :fill="planet.color"/><path fill="none" :stroke="planet.color" stroke-miterlimit="10" stroke-width=".8" d="M97.7 28.4c-6.8-.4-14.4 8.5-16.2 6a23.7 23.7 0 00-11.6-6.6c-5.3-1.2-10.5 1.7-14 4.4s-5.5 5.6-10.9 4.6c-6.1-1.1-7.7-6.7-13.9-7.8v0c-3.7-.6-12 7.5-15.6 8.3-6.6 1.3-6.9-8.4-15.2-8.9M.4 57.9c3.7 0 10.3-5.1 13.6-5.3 5.7-.4 9.4 7.7 15 7.7v0c5.7 0 13.1-8.8 19-8.8 4.9 0 13.3 8.1 18.8 7.7 4.9-.3 12.8-8.4 16.4-8.3 3.1 0 8.3 6.9 14.6 7.1"/><path d="M57.4 36.4l-.5.6c-.3.3-.1 1.8.4 1.3l.5-.5c.3-.4.1-1.8-.4-1.4l-.5.6c-.3.3 0 1.7.3 1.4l.5-.5c.5-.4.1-2-.3-1.5zM33.1 52.7c.2 0 .1-.5 0-.5-.2 0-.2.5 0 .5zM67.4 43.1c.3 0 .3-.8 0-.8s-.3.8 0 .8zM39.6 34.7c.1 0 .1-.4 0-.4s-.1.4 0 .4zM54.3 50.6c.2 0 .2-.7 0-.7-.2-.1-.2.7 0 .7zM37.2 40.3c.3 0 .3-.9 0-.9s-.3.9 0 .9zM22.4 52.5h.8c.2 0 .2-.4.2-.6 0-.2 0-.5-.3-.5h-.8c-.2 0-.3.4-.2.6 0 .1.1.5.3.5zM26.6 53c.3 0 .3-1 0-1-.4 0-.4 1 0 1zM4.5 48c.3 0 .3-.9 0-.9s-.3.9 0 .9zM15.9 39.8c.2 0 .2-.8 0-.8s-.2.8 0 .8zM9.4 40.8c.4 0 .3-1.2 0-1.2-.4 0-.4 1.2 0 1.2zM26.6 37.2c1 0 .9-2.2-.1-2.2s-.9 2.2.1 2.2zM42.9 43.1c.3 0 .3-.9 0-.9s-.3.9 0 .9zM30.6 41.1c.5 0 .5-1.8 0-1.8s-.5 1.8 0 1.8zM81.3 47.2c.3 0 .3-1 0-1-.4.1-.3 1 0 1zM67.4 56.3h.8c.2 0 .2-.4.2-.5 0-.1 0-.5-.3-.5h-.8c-.2 0-.2.4-.2.6 0 0 .1.4.3.4zM77.2 38v-.5c-.2 0-.2.5 0 .5zM73.9 34.2c.3 0 .3-1 0-1s-.3 1 0 1zM89.4 35.7c.3 0 .2-.8 0-.8s-.2.8 0 .8zM90.3 49.5c1 0 .9-2.2-.1-2.2s-.9 2.2.1 2.2zM45.6 47.9c1 0 .9-2.2-.1-2.2-.9-.1-.9 2.2.1 2.2zM55.1 45.3c.1 0 .1-.4 0-.4s-.1.4 0 .4zM40.6 49.9c.3 0 .2-.8 0-.8-.3-.1-.3.8 0 .8zM76 46.6c.3 0 .3-.8 0-.8-.3-.1-.2.8 0 .8zM8.6 51.1c.2 0 .2-.6 0-.6s-.2.6 0 .6zM5.3 39.8c.2 0 .2-.7 0-.7-.2-.1-.2.7 0 .7zM1.2 32.4c.2 0 .2-.6 0-.6-.2-.1-.2.6 0 .6zM61.9 41.8V41c0-.1 0-.5-.3-.5-.2 0-.2.4-.2.5v.8c0 .1.1.6.3.6.2 0 .2-.4.2-.6zM57.6 48.7c.2 0 .2-.7 0-.7-.2.1-.2.7 0 .7zM77.2 42.3c.3 0 .3-.9 0-.9s-.3.9 0 .9zM73.9 52.1c.3 0 .3-1 0-1s-.3 1 0 1zM53.5 47.1c.2 0 .2-.7 0-.7s-.2.7 0 .7zM70.6 35.5c.1 0 .1-.4 0-.4s-.1.4 0 .4zM19.2 47.9c1 0 .9-2.2-.1-2.2-.9-.1-.9 2.2.1 2.2zM37.2 53.6c.2 0 .2-.7 0-.7-.3 0-.3.7 0 .7zM59.2 53.8c.3 0 .3-1.1 0-1.1s-.3 1.1 0 1.1zM91.9 39.7c.2 0 .2-.7 0-.7-.2.1-.2.7 0 .7zM69.8 48.8c.3 0 .3-.9 0-.9s-.2.9 0 .9zM64.1 35.8c.3 0 .3-.9 0-.9s-.3.9 0 .9zM31.4 48.2c.4 0 .4-1.2 0-1.2-.4-.1-.4 1.2 0 1.2zM48.6 41.5c.3 0 .3-1 0-1s-.3 1 0 1zM1.4 55.5s.1 0 0 0l.2-.2v-.2-.2l-.1-.4-.2-.2H.9.8l-.2.2v.4l.1.4.2.2h.2l.2-.2v-.2-.2l-.1-.4-.2-.2H.8l-.2.2v.4l.1.4.2.2h.5s.1 0 0 0l.2-.2v-.2-.2l-.1-.4-.2-.2-.2.2v.4l.1.4.2.2zM87 41.4c.2 0 .2-.7 0-.7-.3 0-.3.7 0 .7zM95.7 52.4c.3 0 .3-1 0-1s-.3 1 0 1zM10.2 44.7c.2 0 .2-.8 0-.8s-.2.8 0 .8zM15.1 51.2c.2 0 .2-.7 0-.7s-.2.7 0 .7zM37.2 44.6c.2 0 .2-.7 0-.7-.3.1-.2.7 0 .7zM21 39.6c.2 0 .1-.5 0-.5-.2.1-.2.5 0 .5zM29 58.4v-.5c-.2 0-.2.5 0 .5zM25.7 45.5c.2 0 .2-.8 0-.8s-.2.8 0 .8zM33.1 36.8c.2 0 .2-.6 0-.6s-.2.6 0 .6zM55.1 41.3v0zM51.9 52.7c.2 0 .2-.5 0-.5s-.2.5 0 .5zM69.8 38.1c.2 0 .2-.6 0-.6s-.2.6 0 .6z" :fill="planet.color"/><g><path d="M97 40.4c.8 0 .8-1.9 0-1.9-.9-.1-.9 1.9 0 1.9zM69.8 32c.8 0 .8-1.9 0-1.9s-.8 1.9 0 1.9zM97 49.3c.8 0 .8-1.9 0-1.9-.9 0-.9 1.9 0 1.9zM82.1 40.4c.8 0 .8-1.9 0-1.9-.9-.1-.9 1.9 0 1.9zM34.4 44.4c.8 0 .8-1.9 0-1.9-.9 0-.8 1.9 0 1.9zM17.9 42.8c.8 0 .8-1.9 0-1.9-.9 0-.9 1.9 0 1.9zM79.8 44.9c.8 0 .8-1.9 0-1.9-.9 0-.9 1.9 0 1.9zM1.8 40.1c.6 0 .6-1.4 0-1.4s-.6 1.4 0 1.4zM65.2 47.1c.8 0 .8-1.9 0-1.9-.9 0-.9 1.9 0 1.9zM5.3 44.4c.8 0 .8-1.9 0-1.9-.9 0-.8 1.9 0 1.9zM73.9 40.4c.8 0 .8-1.9 0-1.9-.9-.1-.8 1.9 0 1.9zM85.7 47.7c.8 0 .8-1.9 0-1.9-.9 0-.9 1.9 0 1.9zM63.6 54.2c.8 0 .8-1.9 0-1.9-.9 0-.8 1.9 0 1.9zM38.6 48.5c.8 0 .8-1.9 0-1.9-.9 0-.9 1.9 0 1.9zM67.8 52.6c.8 0 .8-1.9 0-1.9-.9 0-.8 1.9 0 1.9zM93 47.1c.8 0 .8-1.9 0-1.9-.9 0-.9 1.9 0 1.9zM70.7 54.2c.8 0 .8-1.9 0-1.9-.9 0-.9 1.9 0 1.9zM26.6 56.5c.8 0 .8-1.9 0-1.9-.9 0-.9 1.9 0 1.9zM91.9 38.1c.8 0 .8-1.9 0-1.9-.9 0-.9 1.9 0 1.9zM93.8 33c.8 0 .8-1.9 0-1.9-.9 0-.8 1.9 0 1.9zM93 52.6c.8 0 .8-1.9 0-1.9-.9 0-.9 1.9 0 1.9zM11.1 51.2c.8 0 .8-1.9 0-1.9s-.8 1.9 0 1.9zM31.4 33.4c.8 0 .8-1.9 0-1.9-.9-.1-.8 1.9 0 1.9zM5.3 54.2c.8 0 .8-1.9 0-1.9-.9 0-.8 1.9 0 1.9zM12.9 42.4c.8 0 .8-1.9 0-1.9-.9 0-.9 1.9 0 1.9zM65.7 38.7c.8 0 .8-1.9 0-1.9-.9 0-.8 1.9 0 1.9zM95 36.3c.8 0 .8-1.9 0-1.9-.9 0-.9 1.9 0 1.9zM60.4 46.1c.8 0 .8-1.9 0-1.9-.9 0-.8 1.9 0 1.9zM95 43.6c.8 0 .8-1.9 0-1.9-.9 0-.9 1.9 0 1.9zM22.8 42.4c.8 0 .8-1.9 0-1.9-.9 0-.8 1.9 0 1.9zM14.6 47.7c.8 0 .8-1.9 0-1.9-.9 0-.9 1.9 0 1.9zM61.7 50.4c.8 0 .8-1.9 0-1.9-.9 0-.9 1.9 0 1.9zM34.7 51.2c.8 0 .8-1.9 0-1.9-.9 0-.8 1.9 0 1.9zM5.3 34.6c.8 0 .8-1.9 0-1.9-.9 0-.8 1.9 0 1.9zM45.5 40.8c.8 0 .8-1.9 0-1.9-.9 0-.8 1.9 0 1.9zM26.6 42.8c.8 0 .8-1.9 0-1.9-.9 0-.9 1.9 0 1.9zM36.1 37.1c.8 0 .8-1.9 0-1.9-.9 0-.9 1.9 0 1.9zM60.4 33.4c.8 0 .8-1.9 0-1.9-.9-.1-.8 1.9 0 1.9zM69.8 42c.8 0 .8-1.9 0-1.9s-.8 1.9 0 1.9zM77.2 36.3c.8 0 .8-1.9 0-1.9-.9 0-.9 1.9 0 1.9zM89.4 43.6c.8 0 .8-1.9 0-1.9s-.8 1.9 0 1.9zM57.6 42.4c.8 0 .8-1.9 0-1.9-.9 0-.9 1.9 0 1.9zM51.4 50.4c.8 0 .8-1.9 0-1.9-.9 0-.9 1.9 0 1.9zM83.5 44.4c.8 0 .8-1.9 0-1.9-.9 0-.8 1.9 0 1.9zM66.6 33c.8 0 .8-1.9 0-1.9-.9 0-.9 1.9 0 1.9zM23.2 48.5c.8 0 .8-1.9 0-1.9-.9 0-.8 1.9 0 1.9zM51.9 42c.8 0 .8-1.9 0-1.9-.9 0-.9 1.9 0 1.9zM27.6 48.5c.8 0 .8-1.9 0-1.9-.9 0-.8 1.9 0 1.9zM77.2 50.4c.8 0 .8-1.9 0-1.9-.9 0-.9 1.9 0 1.9zM41.6 40.8c.8 0 .8-1.9 0-1.9-.9 0-.9 1.9 0 1.9zM49.2 45.3c.8 0 .8-1.9 0-1.9-.9-.1-.8 1.9 0 1.9zM31.4 56.5c.8 0 .8-1.9 0-1.9-.9 0-.8 1.9 0 1.9zM40.6 52.6c.8 0 .8-1.9 0-1.9-.9 0-.9 1.9 0 1.9zM2 45.1c.8 0 .8-1.9 0-1.9-.9 0-.9 1.9 0 1.9zM54.1 37.5c.8 0 .8-1.9 0-1.9-.9 0-.8 1.9 0 1.9zM86.2 38.1c.8 0 .8-1.9 0-1.9-.9 0-.8 1.9 0 1.9zM1.3 51.2c.8 0 .8-1.9 0-1.9-.9 0-.9 1.9 0 1.9zM1.3 36.3c.8 0 .8-1.9 0-1.9-.9 0-.9 1.9 0 1.9zM71.6 46.1c.8 0 .8-1.9 0-1.9-.9 0-.8 1.9 0 1.9z" :fill="planet.color"/></g>
               </pattern>
               <g transform="translate(80, 80)">
                 <use xlink:href="#planeta" :fill="planet.color"/>
@@ -74,7 +75,8 @@
             <div class="textarea-content" :class="{active: sendingFeedback}">
               <form ref="submitFeedback" name="submit-to-google-sheet">
                 <input ref="planetInput" type="hidden" name="svg">
-                <input class="nombre" name="nombre" placeholder="Tu nombre (optional)">
+                <input class="input-text" name="nombre" placeholder="Nombre (optional)">
+                <input class="input-text" name="email" type="email" placeholder="Email (optional)">
                 <button ref="btnSubmit" type="submit" @click.prevent="feedbackSubmit()">Enviar »</button>
               </form>  
             </div>
@@ -106,62 +108,62 @@ export default {
           {
             id: "aries",
             value: false,
-            color: "#db6c5a",
+            color: "#d25b46",
           },
           {
             id: "tauro",
             value: false,
-            color: "#e99468",
+            color: "#f09d74",
           },
           {
             id: "geminis",
             value: false,
-            color: "#ebd186",
+            color: "#fadb86",
           },
           {
             id: "cancer",
             value: false,
-            color: "#acba8a",
+            color: "#a5c986",
           },
           {
             id: "leo",
             value: false,
-            color: "#689782",
+            color: "#5d8f76",
           },
           {
             id: "virgo",
             value: false,
-            color: "#578c80",
+            color: "#335c64",
           },
           {
             id: "libra",
             value: false,
-            color: "#5c89a5",
+            color: "#adc6b9",
           },
           {
             id: "escorpio",
             value: false,
-            color: "#306687",
+            color: "#7895a4",
           },
           {
             id: "sagitario",
             value: false,
-            color: "#00517b",
+            color: "#67a3c1",
           },
           {
             id: "capricornio",
             value: false,
-            color: "#45327a",
+            color: "#27689e",
           },
           {
             id: "acuario",
             value: false,
-            color: "#5d2c7a",
+            color: "#992676",
           },
           {
             id: "piscis",
             value: false,
-            color: "#992676",
+            color: "#c73f69",
           },
           ],
         },
@@ -300,29 +302,15 @@ export default {
 </script>
 
 <style>
-html {
-  font-family: 'Nunito', 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,'Helvetica Neue', Arial, sans-serif;  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
-}
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-body {
-  background-color: #012e42;
-  color: #eee8d3;
-  font-size: 1.5rem;
-  margin: 0;
-}
-a { color: aquamarine; }
-a:hover { opacity: .8; }
-
+a { color: #a5c986; }
+a:hover { color: #fadb86; }
+b { color: #fadb86; }
+h2 { font-size: 1.8rem; }
 button {
-  background-color: aquamarine;
+  background-color: #a5c986;
   border: 0;
   border-radius: .3rem;
-  color: #012e42;
+  color: #032b49;
   cursor: pointer;
   font-size: 1.2rem;
   font-weight: bold;
@@ -330,30 +318,27 @@ button {
   padding: .5rem 1rem;
 }
 button:hover { 
-  opacity: .8;
+  background-color: #fadb86;
 }
 audio {
   display: block;
   margin: 2rem auto;
 }
-.container {
-  align-items: center;
-  display: flex;
-  justify-content: center;
-  margin: 0 auto;
-  min-height: 100vh;
-  padding: 1rem;
-  text-align: center;
+.intro, .form.active, .your-planet {
+  background-color: #032b49;
+  border-radius: 4px;
+  margin-bottom: 2rem;
+  max-width: 690px;
+  padding: 1.5rem 2rem;
+  overflow-y: scroll;
 }
-.title {
-  display: block;
-  font-size: 5rem;
-  font-weight: 300;
-  letter-spacing: 1px;
-  margin-bottom: 1rem;
+.intro p {
+  font-size: 1.3rem;
+  margin-bottom: 1rem; 
+  text-align: left;
 }
-.intro {
-  max-width: 720px;
+.intro small {
+  font-size: 1rem;
 }
 input[type="radio"] {
   margin-right: 1rem;
@@ -368,13 +353,21 @@ input[type="radio"] {
   display: none;
 }
 .question-wrapper.active {
-  display: block;
+  display: flex;
+  flex-wrap: wrap;
+}
+.question-wrapper div {
+  flex: 1 1 50%;
+}
+.question-wrapper div.buttons {
+  flex: 1 1 100%;
 }
 .question-wrapper p {
   font-size: 1.6rem;
   font-weight: bold;
   margin-bottom: 1rem;
   text-align: left;
+  flex: 1 1 100%;
 }
 .question-wrapper div label {
   align-items: center;
@@ -384,10 +377,10 @@ input[type="radio"] {
   padding: .5rem;
 }
 .question-wrapper div label:hover {
-  color: aquamarine
+  color: #a5c986
 }
 .buttons {
-  margin: 3rem auto;
+  margin: 3rem auto 0;
 }
 .buttons button {
   margin: .5rem;
@@ -408,8 +401,8 @@ input[type="radio"] {
   height: 100%;
   width: 100%;
 }
-.nombre {
-  border: 1px solid #001b28;
+.input-text {
+  border: 1px solid #032b49;
   border-radius: .3rem;
   font-size: 1.2rem;
   margin-bottom: .5rem;

@@ -24,7 +24,7 @@ export default {
     };
   },  
   created() {
-    setTimeout(() => this.getData(), 2000);
+    setTimeout(() => this.getData(), 1500);
   },
   methods: {
     getData() {
@@ -45,38 +45,30 @@ export default {
 };
 </script>
 
-<style>
-html {
-  font-family: 'Nunito', 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,'Helvetica Neue', Arial, sans-serif;  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
+<style scoped>
+
+.logo, h1, h2, .all-planets {
+  animation: 1s appear ease-in forwards;
+  opacity: 0;
 }
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
+h1 {
+  animation-delay: .5s;
 }
-body {
-  background-color: #012e42;
-  color: #eee8d3;
-  font-size: 1.5rem;
-  margin: 0;
+h2 {
+  animation-delay: 1s;
+  margin-bottom: 2rem;
 }
-.container {
-  margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-.title {
-  display: block;
-  font-size: 6rem;
-  font-weight: 300;
-  letter-spacing: 1px;
+@keyframes appear {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 .all-planets {
+  border-radius: 4px;
+  margin-bottom: 2rem;
+  max-width: 680px;
+  overflow-y: scroll;
   display: flex;
+  flex-direction: row-reverse;
   flex-wrap: wrap;
   gap: .5rem 1rem;
 }
@@ -85,10 +77,12 @@ body {
   font-size: 1rem;
 }
 .all-planets .planet {
+  background-color: #032b49;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   gap: .5rem;
+  padding: 1.5rem 2rem;
 }
 
 </style>
