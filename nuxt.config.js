@@ -12,7 +12,14 @@ export default {
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description', name: 'description', content: 'Generador de planetas online. Armá el tuyo y participá de la tapa de "Espejismos"' },
-      { hid: 'og:image', property: 'og:image', content: "/beldi-espejismos.jpg" }
+      { hid: 'og:image', property: 'og:image', content: '/beldi-espejismos.jpg' },
+      { hid: 'og:url', property: 'og:url', content: 'https://beldi.netlify.app/' },
+      { hid: 'og:description', property: 'og:description', content: 'Generador de planetas online. Armá el tuyo y participá de la tapa de "Espejismos"' },
+      { hid: 'twitter:image', property: 'twitter:image', content: '/beldi-espejismos.jpg' },
+      { hid: 'twitter:url', property: 'twitter:url', content: 'https://beldi.netlify.app/' },
+      { hid: 'twitter:description', property: 'twitter:description', content: 'Generador de planetas online. Armá el tuyo y participá de la tapa de "Espejismos"' },
+      { hid: 'twitter:card', property: 'twitter:card', content: 'summary_large_image' },
+      { hid: 'twitter:title', property: 'twitter:title', content: 'Beldi - Espejismos' }
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }

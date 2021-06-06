@@ -13,9 +13,10 @@
             <source src="/espejismos.mp3" type="audio/mpeg">
             Tu browser no soporta elementos de audio.
           </audio>
-          <p>Después de escucharlo clickeá <b>'empezar'</b> para contestar 5 preguntas sencillas.<br>
-            Aparecerá tu planeta al final de la encuesta y podrás elegir enviarlo a la <nuxt-link to="/gallery">galería</nuxt-link> junto a tu nombre y tu mail.</p>
+          <p>Después de escucharlo clickeá <b>'empezar'</b> para contestar 5 preguntas sencillas.
+          Al final de la encuesta aparecerá tu planeta.</p>
           <p>Seleccionaremos por sorteo los planetas que formarán parte del arte de tapa. Sus creadores recibirán de regalo remeras, gorras y bouchers de cerveza en Cervelar Palermo.</p>
+          <small>Envío gratis sólo en CABA</small>
           <div class="buttons">
             <button @click.prevent="setStep('next')">Empezar ›</button>
           </div>
@@ -41,7 +42,9 @@
       <template v-if="currentStep === 6">
         <section class="your-planet">
           <h2>Tu planeta!</h2>
-          <p>¿Querés enviarlo y publicarlo en la galería?</p>
+          <p>¿Querés enviarlo y publicarlo en la <nuxt-link to="/gallery">galería</nuxt-link>?</p>
+          <p>Para participar del sorteo, envialo junto a tu nombre y tu email.</p>
+
             <svg ref="planetRef" class="planeta-final" viewBox="0 0 160 160" :width="planet.size" :height="planet.size" xmlns:xlink="http://www.w3.org/1999/xlink" overflow="visible">
               <defs>
                 <g id="planeta" transform="translate(-80, -80)"><path d="M46.35 48.67c-13.15 15-16.74 40.92-.76 59.29 19.69 22.63 58.93 22.1 75.54-.35 14.8-20 14-47-4.29-62.84-19.32-16.71-53.32-15.71-70.49 3.9z"/><path d="M44.78 44.85C30.7 61.43 27.74 86 39.06 104.93c10.72 17.91 32.82 26.67 53.1 23.64 21.26-3.17 36.39-18.87 41-39.66 4.75-21.5-4.47-43.94-24.21-54.28-20.55-10.76-48.41-7.21-64.17 10.22-2.42 2.67 0 11.12 3.15 7.64C72 25.84 128.05 36.3 128.53 76.76c.22 18.34-11.53 35.3-28.91 41.05-15.6 5.17-34.21 2.12-47-8.3-17.55-14.28-19.19-39.93-4.68-57a5.93 5.93 0 00.9-6.14c-.66-1.37-2.61-3.24-4.06-1.52z"/></g>
@@ -75,8 +78,8 @@
             <div class="textarea-content" :class="{active: sendingFeedback}">
               <form ref="submitFeedback" name="submit-to-google-sheet">
                 <input ref="planetInput" type="hidden" name="svg">
-                <input class="input-text" name="nombre" placeholder="Nombre" required>
-                <input class="input-text" name="email" type="email" placeholder="Email" required>
+                <input ref="nameRef" class="input-text" name="nombre" placeholder="Nombre" required>
+                <input ref="emailRef" class="input-text" name="email" type="email" placeholder="Email" required>
                 <button ref="btnSubmit" type="submit" @click.prevent="feedbackSubmit()">Enviar »</button>
               </form>  
             </div>
@@ -271,18 +274,28 @@ export default {
   },
   methods: {
     feedbackSubmit() {
-      this.sendingFeedback = true;
-      const scriptURL = 'https://script.google.com/macros/s/AKfycbwz6CT-24RkNWGcggDWfh29uyE1B8qqr8AjJhYOesQDwHt5R38D_ThFzMAC5KDT7odV/exec'
-      const form = this.$refs.submitFeedback
-      var exportsvg = this.$refs.planetRef.outerHTML
-      var exportpat = this.planet.texture.replace("url(", "").replace(")", "").replace("#", "")
-      var seconds = new Date().getTime() / 1000 | 0
+        this.sendingFeedback = true;
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbwz6CT-24RkNWGcggDWfh29uyE1B8qqr8AjJhYOesQDwHt5R38D_ThFzMAC5KDT7odV/exec'
+        const form = this.$refs.submitFeedback
+        var exportsvg = this.$refs.planetRef.outerHTML
+        var exportpat = this.planet.texture.replace("url(", "").replace(")", "").replace("#", "")
+        var seconds = new Date().getTime() / 1000 | 0
+        
+        this.$refs.planetInput.value = exportsvg.replaceAll(exportpat, `${exportpat}-${seconds}`)
       
-      this.$refs.planetInput.value = exportsvg.replaceAll(exportpat, `${exportpat}-${seconds}`)
-      fetch(scriptURL, { method: 'POST', body: new FormData(form)})
-        .then(response => this.sendingFeedback = false)
-        .catch(error => console.error('Error!', error.message))
-      this.$router.push({name: 'gallery'})
+      var email = this.$refs.emailRef
+      var name = this.$refs.nameRef
+      if (email.validity.valid && name.validity.valid) {
+        fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+          .then(response => this.sendingFeedback = false)
+          .catch(error => console.error('Error!', error.message))
+        this.$router.push({name: 'gallery'})    
+      } else {
+        this.sendingFeedback = false;
+        email.classList.add('error')
+        name.classList.add('error')
+      }
+
     },
     setStep(type){
       if (type === "next" && this.currentStep < 6) {
@@ -395,12 +408,19 @@ input[type="radio"] {
 .planeta-final {
   margin: 4rem auto;
 }
-.textarea-content {
-  margin-bottom: 3rem;
+.your-planet {
   position: relative;
 }
+.textarea-content {
+  margin-bottom: 3rem;
+}
 .textarea-content.active:after {
-  background-color: rgba(0,0,0,.6);
+  background: rgba(11,36,62,.7) url("/loader.svg") no-repeat 50% 40%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  font-weight: 500;
   position: absolute;
   top: 0;
   left: 0;
@@ -414,6 +434,12 @@ input[type="radio"] {
   font-size: 1.2rem;
   margin-bottom: .5rem;
   padding: .5rem;
+}
+.input-text:invalid {
+  border: 1px solid #d25b46;
+  background-color: #fff4d7;
+  box-shadow: 0 0 0 2px #d25b46;
+  color: #d25b46;
 }
 @media (max-width: 48em) {
   body { font-size: 1.2rem;}

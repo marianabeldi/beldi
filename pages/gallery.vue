@@ -4,6 +4,7 @@
       <Logo />
       <h1 class="title"> beldi</h1>
       <h2>Todos los planetas</h2>
+      <p class="disclaimer">Si tu planeta no aparece, refrescá la página</p>
       <section class="all-planets" v-if="!gettingData">
           <div class="planet" v-for="(item, i) in gotData.slice().reverse()" :key="i">
             <div v-html="item.svg" width="300" height="300"></div>
@@ -24,7 +25,7 @@ export default {
     };
   },  
   created() {
-    setTimeout(() => this.getData(), 1500);
+    setTimeout(() => this.getData(), 2000);
   },
   methods: {
     getData() {
@@ -47,7 +48,7 @@ export default {
 
 <style scoped>
 
-.logo, h1, h2, .all-planets {
+.logo, h1, h2, .all-planets, .disclaimer {
   animation: 1s appear ease-in forwards;
   opacity: 0;
 }
@@ -57,6 +58,9 @@ h1 {
 h2 {
   animation-delay: 1s;
   margin-bottom: 2rem;
+}
+.disclaimer {
+  animation-delay: 1.5s;
 }
 @keyframes appear {
   from { opacity: 0; }
@@ -68,7 +72,7 @@ h2 {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  gap: .5rem 1rem;
+  gap: .5rem;
 }
 .all-planets p {
   background-color: #001b28;
@@ -80,7 +84,7 @@ h2 {
   flex-direction: column;
   justify-content: flex-end;
   gap: .5rem;
-  padding: 1.5rem 2rem;
+  padding: 0 1rem;
 }
 
 </style>
