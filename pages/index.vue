@@ -7,8 +7,8 @@
       </h1>
       <template v-if="currentStep === 0">
         <section class="intro">
-          <p><strong>¡Hola!</strong> Nosotros somos <a href="https://www.instagram.com/beldimusic/" target="blank">BELDI</a>, te presentamos nuestro próximo single <b>Espejismos</b> y te invitamos a ser parte de la nueva tapa:</p>
-          <p><small> 🎧  Te recomendamos escucharlo con auriculares  🎧</small></p>
+          <p><strong>¡Hola!</strong> Nosotros somos <a href="https://www.instagram.com/beldimusic/" target="blank">BELDI</a>, este es nuestro próximo single <b>Espejismos</b> y te invitamos a ser parte de la nueva tapa:</p>
+          <p><small> 🎧  Ponete los auriculares y dale play 🎵</small></p>
           <audio controls>
             <source src="/espejismos.mp3" type="audio/mpeg">
             Tu browser no soporta elementos de audio.
@@ -42,8 +42,7 @@
       <template v-if="currentStep === 6">
         <section class="your-planet">
           <h2>Tu planeta!</h2>
-          <p>¿Querés enviarlo y publicarlo en la <nuxt-link to="/gallery">galería</nuxt-link>?</p>
-          <p>Para participar del sorteo, envialo junto a tu nombre y tu email.</p>
+          <p>Envialo junto a tu nombre y tu email para publicarlo en la <nuxt-link to="/gallery">galería</nuxt-link> y participar del sorteo.</p>
 
             <svg ref="planetRef" class="planeta-final" viewBox="0 0 160 160" :width="planet.size" :height="planet.size" xmlns:xlink="http://www.w3.org/1999/xlink" overflow="visible">
               <defs>
@@ -80,6 +79,7 @@
                 <input ref="planetInput" type="hidden" name="svg">
                 <input ref="nameRef" class="input-text" name="nombre" placeholder="Nombre" required>
                 <input ref="emailRef" class="input-text" name="email" type="email" placeholder="Email" required>
+                <p class="error-label">⚠️ Revisá los campos</p>
                 <button ref="btnSubmit" type="submit" @click.prevent="feedbackSubmit()">Enviar »</button>
               </form>  
             </div>
@@ -440,6 +440,13 @@ input[type="radio"] {
   background-color: #fff4d7;
   box-shadow: 0 0 0 2px #d25b46;
   color: #d25b46;
+}
+.error-label { display: none;}
+.input-text.error + .error-label {
+    background: #d25b46;
+    display: block;
+    font-size: 1.2rem;
+    margin: 0 0 1rem;
 }
 @media (max-width: 48em) {
   body { font-size: 1.2rem;}
