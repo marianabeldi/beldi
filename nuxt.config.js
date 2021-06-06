@@ -4,14 +4,15 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'beldi',
+    title: 'Beldi - Espejismos',
     htmlAttrs: {
       lang: 'en'
     },
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: '' }
+      { hid: 'description', name: 'description', content: 'Generador de planetas online. Armá el tuyo y participá de la tapa de "Espejismos"' },
+      { hid: 'og:image', property: 'og:image', content: "/beldi-espejismos.jpg" }
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
