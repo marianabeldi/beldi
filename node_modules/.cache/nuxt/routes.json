@@ -3,14 +3,12 @@
     "name": "gallery",
     "path": "/gallery",
     "component": "/Users/marianabeldi/sites/beldi/pages/gallery.vue",
-    "chunkName": "pages/gallery",
-    "_name": "_400abf51"
+    "chunkName": "pages/gallery"
   },
   {
     "name": "index",
     "path": "/",
     "component": "/Users/marianabeldi/sites/beldi/pages/index.vue",
-    "chunkName": "pages/index",
-    "_name": "_2cd9c2de"
+    "chunkName": "pages/index"
   }
 ]
