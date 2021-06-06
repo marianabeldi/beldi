@@ -65,9 +65,8 @@ h2 {
 .all-planets {
   border-radius: 4px;
   margin-bottom: 2rem;
-  max-width: 680px;
-  overflow-y: scroll;
   display: flex;
+  justify-content: center;
   flex-direction: row-reverse;
   flex-wrap: wrap;
   gap: .5rem 1rem;

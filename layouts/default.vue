@@ -20,7 +20,7 @@ body {
   background: #032b49 url("/home-planets.svg");
   background-size: cover;
   color: #f2ead3;
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   margin: 0;
   position: relative;
 }
