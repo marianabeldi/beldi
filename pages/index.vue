@@ -75,8 +75,8 @@
             <div class="textarea-content" :class="{active: sendingFeedback}">
               <form ref="submitFeedback" name="submit-to-google-sheet">
                 <input ref="planetInput" type="hidden" name="svg">
-                <input class="input-text" name="nombre" placeholder="Nombre (optional)">
-                <input class="input-text" name="email" type="email" placeholder="Email (optional)">
+                <input class="input-text" name="nombre" placeholder="Nombre" required>
+                <input class="input-text" name="email" type="email" placeholder="Email" required>
                 <button ref="btnSubmit" type="submit" @click.prevent="feedbackSubmit()">Enviar »</button>
               </form>  
             </div>
