@@ -5,7 +5,7 @@
       <h1 class="title"> beldi</h1>
       <h2>Todos los planetas</h2>
       <section class="all-planets" v-if="!gettingData">
-          <div class="planet" v-for="(item, i) in gotData" :key="i">
+          <div class="planet" v-for="(item, i) in gotData.slice().reverse()" :key="i">
             <div v-html="item.svg" width="300" height="300"></div>
             <p>by {{item.name}}</p>
           </div>
@@ -67,7 +67,6 @@ h2 {
   margin-bottom: 2rem;
   display: flex;
   justify-content: center;
-  flex-direction: row-reverse;
   flex-wrap: wrap;
   gap: .5rem 1rem;
 }
