@@ -4,22 +4,22 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'Beldi - Espejismos',
+    title: 'Beldi - Espejismo',
     htmlAttrs: {
       lang: 'en'
     },
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: 'Generador de planetas online. Armá el tuyo y participá de la tapa de "Espejismos"' },
-      { hid: 'og:image', property: 'og:image', content: '/beldi-espejismos.jpg' },
+      { hid: 'description', name: 'description', content: 'Generador de planetas online. Armá el tuyo y participá de la tapa de "Espejismo"' },
+      { hid: 'og:image', property: 'og:image', content: '/beldi-espejismo.jpg' },
       { hid: 'og:url', property: 'og:url', content: 'https://beldi.netlify.app/' },
-      { hid: 'og:description', property: 'og:description', content: 'Generador de planetas online. Armá el tuyo y participá de la tapa de "Espejismos"' },
-      { hid: 'twitter:image', property: 'twitter:image', content: '/beldi-espejismos.jpg' },
+      { hid: 'og:description', property: 'og:description', content: 'Generador de planetas online. Armá el tuyo y participá de la tapa de "Espejismo"' },
+      { hid: 'twitter:image', property: 'twitter:image', content: '/beldi-espejismo.jpg' },
       { hid: 'twitter:url', property: 'twitter:url', content: 'https://beldi.netlify.app/' },
-      { hid: 'twitter:description', property: 'twitter:description', content: 'Generador de planetas online. Armá el tuyo y participá de la tapa de "Espejismos"' },
+      { hid: 'twitter:description', property: 'twitter:description', content: 'Generador de planetas online. Armá el tuyo y participá de la tapa de "Espejismo"' },
       { hid: 'twitter:card', property: 'twitter:card', content: 'summary_large_image' },
-      { hid: 'twitter:title', property: 'twitter:title', content: 'Beldi - Espejismos' }
+      { hid: 'twitter:title', property: 'twitter:title', content: 'Beldi - Espejismo' }
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }

@@ -3,14 +3,14 @@
     <div>
       <Logo />
       <h1 class="title">
-        Espejismos
+        Espejismo
       </h1>
       <template v-if="currentStep === 0">
         <section class="intro">
-          <p><strong>¡Hola!</strong> Nosotros somos <a href="https://www.instagram.com/beldimusic/" target="blank">BELDI</a>, este es nuestro próximo single <b>Espejismos</b> y te invitamos a ser parte de la nueva tapa:</p>
+          <p><strong>¡Hola!</strong> Nosotros somos <a href="https://www.instagram.com/beldimusic/" target="blank">BELDI</a>, este es nuestro próximo single <b>Espejismo</b> y te invitamos a ser parte de la nueva tapa:</p>
           <p><small> 🎧  Ponete los auriculares y dale play 🎵</small></p>
           <audio controls>
-            <source src="/espejismos.mp3" type="audio/mpeg">
+            <source src="/espejismo.mp3" type="audio/mpeg">
             Tu browser no soporta elementos de audio.
           </audio>
           <p>Después de escucharlo clickeá <b>'empezar'</b> para contestar 5 preguntas sencillas.
