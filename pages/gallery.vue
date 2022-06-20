@@ -4,7 +4,6 @@
       <Logo />
       <h1 class="title"> beldi</h1>
       <h2>Todos los planetas</h2>
-      <p class="disclaimer">Si tu planeta no aparece, refrescá la página</p>
       <section class="all-planets" v-if="!gettingData">
           <div class="planet" v-for="(item, i) in gotData.slice().reverse()" :key="i">
             <div v-html="item.svg" width="300" height="300"></div>
@@ -21,28 +20,37 @@ export default {
   data() {
     return {
       gettingData: true,
-      gotData: []
+      gotData: [],
     };
   },  
-  created() {
-    setTimeout(() => this.getData(), 2000);
+  async created() {
+    var data = await this.$supabase.from("beldi-planetas").select("*")
+    this.getData();
   },
   methods: {
-    getData() {
-      fetch("https://sheets.googleapis.com/v4/spreadsheets/1uO61cTI5r7mx0NrX5LJaXuzKAfbVIL-nPKUOEL0vTEY?key=AIzaSyDLhiXvMbj7DUfamL_WTFT7nBMBmcZdGts&includeGridData=true", {mode: 'cors'})
-        .then(response => response.json())
-        .then((data) => { 
-          for (let e = 1; e < data.sheets[0].data[0].rowData.length; e++) {
-            var newObj = {}
-            newObj.name = data.sheets[0].data[0].rowData[e].values[0].formattedValue
-            newObj.svg = data.sheets[0].data[0].rowData[e].values[1].formattedValue
-            this.gotData.push(newObj)
-          }
-          this.gettingData = false
-        });
-      console.log(this.gotData)
+    async getData() {
+    var data = await this.$supabase.from("beldi-planetas").select("*")
+    for (let e = 1; e < data.data.length; e++) {
+      var newObj = {}
+      newObj.name = data.data[e].name
+      newObj.svg = data.data[e].svg
+      this.gotData.push(newObj)
     }
-  },  
+    this.gettingData = false
+
+      // fetch("https://sheets.googleapis.com/v4/spreadsheets/1uO61cTI5r7mx0NrX5LJaXuzKAfbVIL-nPKUOEL0vTEY?key=AIzaSyDLhiXvMbj7DUfamL_WTFT7nBMBmcZdGts&includeGridData=true", {mode: 'cors'})
+      //   .then(response => response.json())
+      //   .then((data) => { 
+      //     for (let e = 1; e < data.sheets[0].data[0].rowData.length; e++) {
+      //       var newObj = {}
+      //       newObj.name = data.sheets[0].data[0].rowData[e].values[0].formattedValue
+      //       newObj.svg = data.sheets[0].data[0].rowData[e].values[1].formattedValue
+      //       this.gotData.push(newObj)
+      //     }
+      //     this.gettingData = false
+      //   });
+    },
+  },
 };
 </script>
 

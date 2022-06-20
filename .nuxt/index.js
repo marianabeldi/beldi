@@ -12,7 +12,9 @@ import { setContext, getLocation, getRouteData, normalizeError } from './utils'
 
 /* Plugins */
 
-import nuxt_plugin_plugin_2d811957 from 'nuxt_plugin_plugin_2d811957' // Source: ./components/plugin.js (mode: 'all')
+import nuxt_plugin_plugin_91eb555a from 'nuxt_plugin_plugin_91eb555a' // Source: ./components/plugin.js (mode: 'all')
+import nuxt_plugin_supabase_df0dfbaa from 'nuxt_plugin_supabase_df0dfbaa' // Source: ./supabase.js (mode: 'all')
+import nuxt_plugin_supabasecookie_3572c65c from 'nuxt_plugin_supabasecookie_3572c65c' // Source: ./supabase-cookie.js (mode: 'all')
 
 // Component: <ClientOnly>
 Vue.component(ClientOnly.name, ClientOnly)
@@ -176,8 +178,16 @@ async function createApp(ssrContext, config = {}) {
   }
   // Plugin execution
 
-  if (typeof nuxt_plugin_plugin_2d811957 === 'function') {
-    await nuxt_plugin_plugin_2d811957(app.context, inject)
+  if (typeof nuxt_plugin_plugin_91eb555a === 'function') {
+    await nuxt_plugin_plugin_91eb555a(app.context, inject)
+  }
+
+  if (typeof nuxt_plugin_supabase_df0dfbaa === 'function') {
+    await nuxt_plugin_supabase_df0dfbaa(app.context, inject)
+  }
+
+  if (typeof nuxt_plugin_supabasecookie_3572c65c === 'function') {
+    await nuxt_plugin_supabasecookie_3572c65c(app.context, inject)
   }
 
   // Lock enablePreview in context

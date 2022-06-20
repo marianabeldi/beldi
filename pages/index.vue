@@ -273,30 +273,10 @@ export default {
     }
   },
   methods: {
-    feedbackSubmit() {
-        this.sendingFeedback = true;
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbwz6CT-24RkNWGcggDWfh29uyE1B8qqr8AjJhYOesQDwHt5R38D_ThFzMAC5KDT7odV/exec'
-        const form = this.$refs.submitFeedback
-        var exportsvg = this.$refs.planetRef.outerHTML
-        var exportpat = this.planet.texture.replace("url(", "").replace(")", "").replace("#", "")
-        var seconds = new Date().getTime() / 1000 | 0
-        
-        this.$refs.planetInput.value = exportsvg.replaceAll(exportpat, `${exportpat}-${seconds}`)
-      
-      var email = this.$refs.emailRef
-      var name = this.$refs.nameRef
-      if (email.validity.valid && name.validity.valid) {
-        fetch(scriptURL, { method: 'POST', body: new FormData(form)})
-          .then(response => this.sendingFeedback = false)
-          .catch(error => console.error('Error!', error.message))
-        this.$router.push({name: 'gallery'})    
-      } else {
-        this.sendingFeedback = false;
-        email.classList.add('error')
-        name.classList.add('error')
-      }
-
-    },
+    async feedbackSubmit() {
+      await this.$supabase.from("beldi-planetas").insert({ svg: this.$refs.planetRef.outerHTML, name: this.$refs.nameRef.value, email: this.$refs.emailRef.value });
+console.log(this.$refs.planetRef.outerHTML)
+},
     setStep(type){
       if (type === "next" && this.currentStep < 6) {
         this.currentStep++
