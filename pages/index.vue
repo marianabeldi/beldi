@@ -275,8 +275,8 @@ export default {
   methods: {
     async feedbackSubmit() {
       await this.$supabase.from("beldi-planetas").insert({ svg: this.$refs.planetRef.outerHTML, name: this.$refs.nameRef.value, email: this.$refs.emailRef.value });
-console.log(this.$refs.planetRef.outerHTML)
-},
+      this.$router.push('/gallery');
+    },
     setStep(type){
       if (type === "next" && this.currentStep < 6) {
         this.currentStep++
