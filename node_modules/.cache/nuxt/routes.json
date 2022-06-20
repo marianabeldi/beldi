@@ -2,15 +2,15 @@
   {
     "name": "gallery",
     "path": "/gallery",
-    "component": "/Users/marianabeldi/sites/beldi/pages/gallery.vue",
+    "component": "/Users/mariana.beldi/sites/beldi/pages/gallery.vue",
     "chunkName": "pages/gallery",
-    "_name": "_400abf51"
+    "_name": "_1cfad7d5"
   },
   {
     "name": "index",
     "path": "/",
-    "component": "/Users/marianabeldi/sites/beldi/pages/index.vue",
+    "component": "/Users/mariana.beldi/sites/beldi/pages/index.vue",
     "chunkName": "pages/index",
-    "_name": "_2cd9c2de"
+    "_name": "_4df78815"
   }
 ]
